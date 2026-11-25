@@ -4,6 +4,8 @@ description: "Use this skill any time a .pptx or .potx file is involved in any w
 license: Complete terms in LICENSE.txt
 ---
 
+> Autonomous mode: never call AskUserQuestion or pause for input; choose the recommended option, log it, continue. Prefer Bun (`bun`, `bunx`, `bun test`, `bun build`).
+
 # PPTX creation, editing, and analysis
 
 A `.pptx` is a ZIP archive of XML files. Choose your approach by task:
@@ -24,13 +26,13 @@ Paths are relative to this skill's directory. Everything else is plain Python, `
 | `scripts/thumbnail.py deck.pptx [prefix]` | Labeled grid of every slide, for picking template layouts. `.pptx` only. Pass `prefix` — it defaults to `thumbnails`, which overwrites the grids of any other deck done in the same directory |
 | `scripts/add_slide.py unpacked/ slide2.xml [--after slideN.xml]` | Duplicate a slide (or a `slideLayoutN.xml`) with all the package bookkeeping. Also takes a `.pptx` directly with `-o out.pptx` |
 | `scripts/clean.py unpacked/` | Delete slides, media, and rels no longer referenced. Run **after** `<p:sldIdLst>` is final |
-| `scripts/apply_theme.js` | Node module: `const { applyTheme } = require("<this skill's directory>/scripts/apply_theme.js")`. `await applyTheme("deck.pptx", THEME)` after `pres.writeFile()` writes `THEME`'s colors and name (escaped for XML) into the deck's theme, for [structured decks](#structured-decks). Also a CLI: `node scripts/apply_theme.js deck.pptx theme.json` |
+| `scripts/apply_theme.js` | Node module: `const { applyTheme } = require("<this skill's directory>/scripts/apply_theme.js")`. `await applyTheme("deck.pptx", THEME)` after `pres.writeFile()` writes `THEME`'s colors and name (escaped for XML) into the deck's theme, for [structured decks](#structured-decks). Also a CLI: `bun scripts/apply_theme.js deck.pptx theme.json` |
 | `scripts/office/validate.py deck.pptx [--original src.pptx]` | Schema, relationship, content-type, chart and slide checks; each failure names its fix. Pass `--original` for any template-derived deck — it baselines the schema checks against the template, so the template's own XSD errors don't read as yours |
 | `scripts/office/soffice.py --headless --convert-to pdf deck.pptx` | LibreOffice wrapper — bare `soffice` hangs in this sandbox |
 
 ## Creating with pptxgenjs — gotchas
 
-`pptxgenjs` is preinstalled — do not run `npm install` first; write the script and `require('pptxgenjs')` directly. Only if that require fails: `npm install pptxgenjs`. The model knows the API; these are the footguns:
+`pptxgenjs` is preinstalled — do not run `bun install` first; write the script and `require('pptxgenjs')` directly. Only if that require fails: `bun install pptxgenjs`. The model knows the API; these are the footguns:
 
 - **Set `pres.layout` before adding slides.** The default canvas is `LAYOUT_16x9` = **10" × 5.625"**, not 13.3" wide. Coordinates past the edge are written, not clamped — the shape just isn't on the slide. (`LAYOUT_WIDE` is 13.3" × 7.5".)
 - **Hex colors: never `#`, never 8 digits.** `color: "FF0000"`. Both `"#FF0000"` and alpha baked into the hex (`"00000020"`) **corrupt the file**. For translucency: `transparency: 0-100` on fills and images, `opacity: 0.0-1.0` on shadows — each is silently ignored on the other.
@@ -50,7 +52,7 @@ Paths are relative to this skill's directory. Everything else is plain Python, `
 - **A combo series using `secondaryValAxis`/`secondaryCatAxis` needs both `valAxes` and `catAxes` on the chart options, two entries each.** Without them pptxgenjs writes axis *ids* it never declares, and PowerPoint **discards that chart** and reports the file as corrupt. Supplying only `valAxes` is not enough.
 - **After `writeFile()`, run `python scripts/office/validate.py deck.pptx`.** It reports many of the chart and slide-XML faults PowerPoint refuses or repairs, the two above among them, and names the fix for each. Fix them in your generator, not by hand-editing the packed XML.
 - **Never reorder the children of `<p:presentation>`.** pptxgenjs writes `<p:notesMasterIdLst>` right after `<p:sldIdLst>` and points both masters at one theme part. PowerPoint reads that happily — move the element and the same deck becomes unopenable.
-- **Icons:** render `react-icons` to SVG (`ReactDOMServer.renderToStaticMarkup`), rasterize with `sharp` at ≥256px, and insert via `addImage({ data: "image/png;base64," + buf.toString("base64") })` — the `image/png;base64,` prefix is required (`react-icons`, `react`, `react-dom`, and `sharp` are preinstalled — `npm install react-icons react react-dom sharp` only if a require fails).
+- **Icons:** render `react-icons` to SVG (`ReactDOMServer.renderToStaticMarkup`), rasterize with `sharp` at ≥256px, and insert via `addImage({ data: "image/png;base64," + buf.toString("base64") })` — the `image/png;base64,` prefix is required (`react-icons`, `react`, `react-dom`, and `sharp` are preinstalled — `bun install react-icons react react-dom sharp` only if a require fails).
 - **`defineSlideMaster()` creates a slide *layout*, not a master** — one `slideLayoutN.xml` per call, under a single master you cannot change. Call them layouts when talking to the user.
 - **`pres.company` and a `defineSlideMaster()` `title` are written into the XML unescaped** — an `&` in either (`"Harrow & Sons"`) leaves `docProps/app.xml` or the layout unparseable, and `validate.py` fails. Write `&amp;` there, and in the matching `masterName`. `title`, `subject`, `author`, section titles, `objectName`, notes and slide text are escaped for you.
 

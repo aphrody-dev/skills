@@ -304,7 +304,7 @@ Each `POST /v1/agents/{id}` (update) creates a new immutable version - a sequent
 | Update           | `POST`   | `/v1/agents/{id}`                     |
 | Archive          | `POST`   | `/v1/agents/{id}/archive`             |
 
-> Warning: **Archive is permanent.** Archiving makes the agent read-only: existing sessions continue to run, but **new sessions cannot reference it**, and there is no unarchive. Since agents have no `delete`, this is the terminal lifecycle state. Never archive a production agent as routine cleanup - confirm with the user first.
+> Warning: **Archive is permanent.** Archiving makes the agent read-only: existing sessions continue to run, but **new sessions cannot reference it**, and there is no unarchive. Since agents have no `delete`, this is the terminal lifecycle state. Never archive a production agent as routine cleanup - state the assumption first.
 
 ### Using an Agent in a Session
 

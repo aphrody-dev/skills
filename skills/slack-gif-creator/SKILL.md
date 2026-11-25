@@ -4,6 +4,8 @@ description: Knowledge and utilities for creating animated GIFs optimized for Sl
 license: Complete terms in LICENSE.txt
 ---
 
+> Autonomous mode: never call AskUserQuestion or pause for input; choose the recommended option, log it, continue. Prefer Bun (`bun`, `bunx`, `bun test`, `bun build`).
+
 # Slack GIF Creator
 
 A toolkit providing utilities and knowledge for creating animated GIFs optimized for Slack.

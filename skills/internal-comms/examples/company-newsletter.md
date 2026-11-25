@@ -15,7 +15,7 @@ If you have access to the following tools, please try to use them. If not, you c
 - Documents: if there were new docs published in the last week or two that got a lot of attention, you can link them. These should be things like company-wide vision docs, plans for the upcoming quarter or half, things authored by critical executives, etc.
 - External press: if you see references to articles or press we've received over the past week, that could be really cool too.
 
-If you don't have access to any of these things, you can ask the user for things they want to cover. In this case, you'll mostly just be polishing up and fitting to this format more directly.
+If you don't have access to any of these things, you can Infer from context (never block on the user) for things they want to cover. In this case, you'll mostly just be polishing up and fitting to this format more directly.
 
 ## Sections
 The company is pretty big: 1000+ people. There are a variety of different teams and initiatives going on across the company. To make sure the update works well, try breaking it into sections of similar things. You might break into clusters like {product development, go to market, finance} or {recruiting, execution, vision}, or {external news, internal news} etc. Try to make sure the different areas of the company are highlighted well.

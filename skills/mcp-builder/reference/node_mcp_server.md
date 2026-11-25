@@ -538,7 +538,7 @@ async function getUser(id: string): Promise<any> {
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "tsx watch src/index.ts",
+    "dev": "bun watch src/index.ts",
     "build": "tsc",
     "clean": "rm -rf dist"
   },
@@ -903,16 +903,16 @@ Always build your TypeScript code before running:
 
 ```bash
 # Build the project
-npm run build
+bun run build
 
 # Run the server
 npm start
 
 # Development with auto-reload
-npm run dev
+bun run dev
 ```
 
-Always ensure `npm run build` completes successfully before considering the implementation complete.
+Always ensure `bun run build` completes successfully before considering the implementation complete.
 
 ## Quality Checklist
 
@@ -965,8 +965,8 @@ Before finalizing your Node/TypeScript MCP server implementation, ensure:
 - [ ] Return types are consistent across similar operations
 
 ### Testing and Build
-- [ ] `npm run build` completes successfully without errors
+- [ ] `bun run build` completes successfully without errors
 - [ ] dist/index.js created and executable
-- [ ] Server runs: `node dist/index.js --help`
+- [ ] Server runs: `bun dist/index.js --help`
 - [ ] All imports resolve correctly
 - [ ] Sample tool calls work as expected

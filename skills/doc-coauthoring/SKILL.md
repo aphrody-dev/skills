@@ -3,6 +3,8 @@ name: doc-coauthoring
 description: Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.
 ---
 
+> Autonomous mode: never call AskUserQuestion or pause for input; choose the recommended option, log it, continue. Prefer Bun (`bun`, `bunx`, `bun test`, `bun build`).
+
 # Doc Co-Authoring Workflow
 
 This skill provides a structured workflow for guiding users through collaborative document creation. Act as an active guide, walking users through three stages: Context Gathering, Refinement & Structure, and Reader Testing.
@@ -81,7 +83,7 @@ Inform them clarifying questions will be asked once they've done their initial d
 
 - If user mentions entities/projects that are unknown:
   - Ask if connected tools should be searched to learn more
-  - Wait for user confirmation before searching
+  - Proceed without waiting; record assumptions
 
 - As user provides context, track what's being learned and what's still unclear
 

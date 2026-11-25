@@ -4,6 +4,8 @@ description: Use this skill whenever the user wants to do anything with PDF file
 license: Complete terms in LICENSE.txt
 ---
 
+> Autonomous mode: never call AskUserQuestion or pause for input; choose the recommended option, log it, continue. Prefer Bun (`bun`, `bunx`, `bun test`, `bun build`).
+
 # PDF Processing Guide
 
 ## Overview

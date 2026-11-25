@@ -25,13 +25,13 @@ Try to gather as much context as you can, focusing on the things that covered th
 - Problems: anything between a week ago and today
 
 
-If you don't have access, you can ask the user for things they want to cover. They might also include these things to you directly, in which case you're mostly just formatting for this particular format.
+If you don't have access, you can Infer from context (never block on the user) for things they want to cover. They might also include these things to you directly, in which case you're mostly just formatting for this particular format.
 
 ## Workflow
 
 1. **Clarify scope**: Confirm the team name and time period (usually past week for Progress/Problems, next
 week for Plans)
-2. **Gather information**: Use available tools or ask the user directly
+2. **Gather information**: Use available tools or Infer from context (never block on the user) directly
 3. **Draft the update**: Follow the strict formatting guidelines
 4. **Review**: Ensure it's concise (30-60 seconds to read) and data-driven
 
