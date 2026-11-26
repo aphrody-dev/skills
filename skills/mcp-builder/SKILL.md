@@ -4,6 +4,8 @@ description: Guide for creating high-quality MCP (Model Context Protocol) server
 license: Complete terms in LICENSE.txt
 ---
 
+> Autonomous mode: never call AskUserQuestion or pause for input; choose the recommended option, log it, continue. Prefer Bun (`bun`, `bunx`, `bun test`, `bun build`).
+
 # MCP Server Development Guide
 
 ## Overview
@@ -61,9 +63,9 @@ Key pages to review:
 
 The TypeScript SDK has two major versions. Pick one before writing code:
 - **v2** (`@modelcontextprotocol/server`): the current stable release. Use it for new servers.
-- **v1** (`@modelcontextprotocol/sdk`): receives bug and security fixes only. Use it only when the project's `package.json` already depends on `@modelcontextprotocol/sdk`, or migrate that project with `npx @modelcontextprotocol/codemod@latest v1-to-v2 .`
+- **v1** (`@modelcontextprotocol/sdk`): receives bug and security fixes only. Use it only when the project's `package.json` already depends on `@modelcontextprotocol/sdk`, or migrate that project with `bunx @modelcontextprotocol/codemod@latest v1-to-v2 .`
 
-If the project already uses v1, tell the user once, in a sentence or two, that v2 (`@modelcontextprotocol/server`) is the current stable release, that v1 receives only bug and security fixes, and that `npx @modelcontextprotocol/codemod@latest v1-to-v2 .` migrates the project. Then continue with v1 unless the user asks to migrate.
+If the project already uses v1, tell the user once, in a sentence or two, that v2 (`@modelcontextprotocol/server`) is the current stable release, that v1 receives only bug and security fixes, and that `bunx @modelcontextprotocol/codemod@latest v1-to-v2 .` migrates the project. Then continue with v1 unless the user asks to migrate.
 
 Don't mix the two in one project: v1 code samples (imports from `@modelcontextprotocol/sdk/...`) don't apply to v2.
 
@@ -147,9 +149,9 @@ Review for:
 #### 3.2 Build and Test
 
 **TypeScript:**
-- Run `npm run build` to verify compilation
+- Run `bun run build` to verify compilation
 - v2 projects: run the self-check script from the [v2 guide](./reference/node_mcp_server_v2.md#verify-your-server) against the built server
-- Test with MCP Inspector: `npx @modelcontextprotocol/inspector`
+- Test with MCP Inspector: `bunx @modelcontextprotocol/inspector`
 
 **Python:**
 - Verify syntax: `python -m py_compile your_server.py`

@@ -37,7 +37,7 @@ All resources are under the `beta` namespace. Python and TypeScript share identi
 | Memory Versions | `memory_stores.memory_versions.list` / `retrieve` / `redact` | `MemoryStores.MemoryVersions.List` / `Get` / `Redact` |
 
 **Naming quirks to watch for:**
-- Agents and Session Threads have **no delete** - only `archive`. Archive is **permanent**: the agent becomes read-only, new sessions cannot reference it, and there is no unarchive. Confirm with the user before archiving a production agent. Environments, Sessions, Vaults, Credentials, and Memory Stores have both `delete` and `archive`; Session Resources, Files, Skills, and Memories are `delete`-only; Memory Versions have neither - only `redact`.
+- Agents and Session Threads have **no delete** - only `archive`. Archive is **permanent**: the agent becomes read-only, new sessions cannot reference it, and there is no unarchive. state the assumption before archiving a production agent. Environments, Sessions, Vaults, Credentials, and Memory Stores have both `delete` and `archive`; Session Resources, Files, Skills, and Memories are `delete`-only; Memory Versions have neither - only `redact`.
 - Session resources use `add` (not `create`).
 - Go's event stream is `StreamEvents` (not `Stream`).
 - The self-hosted worker class is `EnvironmentWorker` from `anthropic.lib.environments` / `@anthropic-ai/sdk/helpers/beta/environments` / `anthropic-sdk-go/lib/environments`; `client.beta.environments.work.worker(...)` is a factory that returns the same class, alongside the `environments.work.poller/stats/stop` client methods.

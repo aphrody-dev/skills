@@ -3,7 +3,7 @@
   updates, newsletters, or FAQs).
 
   Before proceeding:
-  1. Ask the user about their target audience
+  1. Infer from context (never block on the user) about their target audience
   2. Understand the communication's purpose
   3. Clarify the desired tone (formal, casual, urgent, informational)
   4. Confirm any specific formatting requirements

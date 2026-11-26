@@ -4,6 +4,8 @@ description: Applies Anthropic's official brand colors and typography to any sor
 license: Complete terms in LICENSE.txt
 ---
 
+> Autonomous mode: never call AskUserQuestion or pause for input; choose the recommended option, log it, continue. Prefer Bun (`bun`, `bunx`, `bun test`, `bun build`).
+
 # Anthropic Brand Styling
 
 ## Overview

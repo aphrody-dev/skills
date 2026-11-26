@@ -11,9 +11,9 @@ Code patterns are adapted from the [MCP TypeScript SDK examples](https://github.
 ### Install
 
 ```bash
-npm install @modelcontextprotocol/server zod
-npm install @modelcontextprotocol/express @modelcontextprotocol/node express   # Streamable HTTP only
-npm install -D @modelcontextprotocol/client typescript tsx @types/node @types/express
+bun install @modelcontextprotocol/server zod
+bun install @modelcontextprotocol/express @modelcontextprotocol/node express   # Streamable HTTP only
+bun install -D @modelcontextprotocol/client typescript bun @types/node @types/express
 ```
 
 ### A Server in One Screen
@@ -97,8 +97,8 @@ Name the package and server `{service}-mcp-server` (lowercase, hyphens, no versi
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsx watch src/index.ts",
-    "smoke": "tsx scripts/smoke.ts"
+    "dev": "bun watch src/index.ts",
+    "smoke": "bun scripts/smoke.ts"
   },
   "engines": { "node": ">=20.3" },
   "dependencies": {
@@ -118,7 +118,7 @@ Name the package and server `{service}-mcp-server` (lowercase, hyphens, no versi
 }
 ```
 
-- `bin` plus the `#!/usr/bin/env node` line at the top of `src/index.ts` let hosts launch the server with `npx -y {service}-mcp-server`
+- `bin` plus the `#!/usr/bin/env node` line at the top of `src/index.ts` let hosts launch the server with `bunx {service}-mcp-server`
 - A stdio-only server can drop `express`, `@types/express`, and the two adapter packages
 - Keep `zod` at `^4.2.0` or later: v2 does not support Zod 3, and Zod 4.0–4.1 schemas fail to type-check in `registerTool`. If the server runs anyway (`tsx` skips type-checking), the SDK logs a fallback warning and, before 4.1.13, drops `.describe()` text from the advertised schemas
 
@@ -633,12 +633,12 @@ Behind `createMcpHandler` each request has its own server instance, so publish c
 
 ## Verify Your Server
 
-Write a self-check script that starts the built server, calls its tools as a client would, and exits non-zero on any failure. Run it after every change, along with `npm run build`; adapt the tool names and assertions to your server.
+Write a self-check script that starts the built server, calls its tools as a client would, and exits non-zero on any failure. Run it after every change, along with `bun run build`; adapt the tool names and assertions to your server.
 
 ```typescript
 /**
  * Self-check: starts the built server over stdio, calls its tools, and exits non-zero on any failure.
- * Run with: npm run build && npm run smoke
+ * Run with: bun run build && bun run smoke
  */
 import { strict as assert } from "node:assert";
 import { Client } from "@modelcontextprotocol/client";
@@ -681,7 +681,7 @@ console.error("Smoke test passed");
 - Call read-only tools with realistic arguments; check that one invalid input is rejected
 - `StdioClientTransport` gives the child process only a safe default environment (`PATH`, `HOME`, and similar), so pass API keys and other settings in `env`
 - For an HTTP server, start it (`TRANSPORT=http npm start`) and connect with `new StreamableHTTPClientTransport(new URL("http://127.0.0.1:3000/mcp"))` from `@modelcontextprotocol/client` instead
-- For manual exploration, `npx @modelcontextprotocol/inspector node dist/index.js` opens an interactive UI
+- For manual exploration, `bunx @modelcontextprotocol/inspector bun dist/index.js` opens an interactive UI
 - More test patterns, including in-process tests without a subprocess: `https://ts.sdk.modelcontextprotocol.io/v2/testing.md`
 
 ---
@@ -693,7 +693,7 @@ Each linked example is a runnable server and client pair from the SDK repository
 | To... | See |
 |---|---|
 | Report progress, send log messages, and handle cancellation in long-running tools | [streaming](https://github.com/modelcontextprotocol/typescript-sdk/tree/main/examples/streaming) |
-| Ask the user for input mid-call (elicitation) | [elicitation](https://github.com/modelcontextprotocol/typescript-sdk/tree/main/examples/elicitation) |
+| Infer from context (never block on the user) for input mid-call (elicitation) | [elicitation](https://github.com/modelcontextprotocol/typescript-sdk/tree/main/examples/elicitation) |
 | Notify subscribed clients when resources change | [subscriptions](https://github.com/modelcontextprotocol/typescript-sdk/tree/main/examples/subscriptions) |
 | Add OAuth login (authorization code flow) | [oauth](https://github.com/modelcontextprotocol/typescript-sdk/tree/main/examples/oauth) |
 | Accept machine-to-machine OAuth (client credentials) | [oauth-client-credentials](https://github.com/modelcontextprotocol/typescript-sdk/tree/main/examples/oauth-client-credentials) |
@@ -709,9 +709,9 @@ Each linked example is a runnable server and client pair from the SDK repository
 To move an existing `@modelcontextprotocol/sdk` server to v2, run the official codemod at the package root, then fix what it marks:
 
 ```bash
-npx @modelcontextprotocol/codemod@latest v1-to-v2 .
+bunx @modelcontextprotocol/codemod@latest v1-to-v2 .
 grep -rn '@mcp-codemod-error' .   # Spots the codemod could not rewrite safely
-npx tsc --noEmit
+bunx tsc --noEmit
 ```
 
 The codemod rewrites imports, `package.json`, registration calls, and handler context access. Check that `zod` ends up at `^4.2.0` or later, then run your formatter and tests. The full guide is at `https://ts.sdk.modelcontextprotocol.io/v2/migration/upgrade-to-v2.md`.
@@ -743,5 +743,5 @@ The codemod rewrites imports, `package.json`, registration calls, and handler co
 - [ ] `bin` points at `dist/index.js`, and `src/index.ts` starts with `#!/usr/bin/env node`
 
 ### Verification
-- [ ] `npm run build` completes without errors
+- [ ] `bun run build` completes without errors
 - [ ] The self-check script passes against the built server

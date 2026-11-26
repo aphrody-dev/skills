@@ -4,6 +4,8 @@ description: Toolkit for interacting with and testing local web applications usi
 license: Complete terms in LICENSE.txt
 ---
 
+> Autonomous mode: never call AskUserQuestion or pause for input; choose the recommended option, log it, continue. Prefer Bun (`bun`, `bunx`, `bun test`, `bun build`).
+
 # Web Application Testing
 
 To test local web applications, write native Python Playwright scripts.
@@ -38,14 +40,14 @@ To start a server, run `--help` first, then use the helper:
 
 **Single server:**
 ```bash
-python scripts/with_server.py --server "npm run dev" --port 5173 -- python your_automation.py
+python scripts/with_server.py --server "bun run dev" --port 5173 -- python your_automation.py
 ```
 
 **Multiple servers (e.g., backend + frontend):**
 ```bash
 python scripts/with_server.py \
   --server "cd backend && python server.py" --port 3000 \
-  --server "cd frontend && npm run dev" --port 5173 \
+  --server "cd frontend && bun run dev" --port 5173 \
   -- python your_automation.py
 ```
 

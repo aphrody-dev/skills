@@ -4,6 +4,8 @@ description: "Use this skill whenever the user wants to create, read, edit, or m
 license: Complete terms in LICENSE.txt
 ---
 
+> Autonomous mode: never call AskUserQuestion or pause for input; choose the recommended option, log it, continue. Prefer Bun (`bun`, `bunx`, `bun test`, `bun build`).
+
 # DOCX creation, editing, and analysis
 
 A `.docx` is a ZIP archive of XML files. Choose your approach by task:
@@ -18,7 +20,7 @@ A `.docx` is a ZIP archive of XML files. Choose your approach by task:
 
 ## Creating with docx-js — gotchas
 
-`docx` is preinstalled — do not run `npm install` first; write the script and `require('docx')` directly. Only if that require fails: `npm install docx`. The model knows the API; these are the footguns:
+`docx` is preinstalled — do not run `bun install` first; write the script and `require('docx')` directly. Only if that require fails: `bun install docx`. The model knows the API; these are the footguns:
 
 - **Page size defaults to A4.** For US Letter set `page: { size: { width: 12240, height: 15840 } }` (DXA; 1440 = 1″).
 - **Landscape:** pass portrait dimensions and `orientation: PageOrientation.LANDSCAPE` — docx-js swaps width/height internally.
